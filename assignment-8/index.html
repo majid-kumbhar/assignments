@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Questions</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <div id="header">
+        <h1>Welcome to the Testing Service</h1>
+    </div>
+
+    <div id="quizContainer"></div>
+    <button onclick="nextQuestion()">Next Question</button>
+    <div id="resultContainer"></div>
+    <div id="marksheet" style="display: none;">
+        <h2>Mark Sheet</h2>
+        <p id="percentage"></p>
+        <p id="correctAnswers"></p>
+        <p id="incorrectAnswers"></p>
+    </div>
+    
+    <script>
+        var currentQuestionIndex = 0;
+        var correctCount = 0;
+        var totalQuestions = questionsData.length;
+
+        // Function to create HTML content for the current question
+        function generateHTML() {
+            var container = document.getElementById('quizContainer');
+            var question = questionsData[currentQuestionIndex];
+
+            if (question) {
+                var questionHTML = '<div>';
+                questionHTML += '<p>' + question.Question + '</p>';
+
+                for (var j = 0; j < question.Options.length; j++) {
+                    var option = question.Options[j];
+                    var optionId = 'q' + currentQuestionIndex + 'option' + j;
+
+                    questionHTML += '<input type="radio" id="' + optionId + '" name="question' + currentQuestionIndex + '" value="' + option + '">';
+                    questionHTML += '<label for="' + optionId + '">' + option + '</label><br>';
+                }
+
+                questionHTML += '</div>';
+                container.innerHTML = questionHTML;
+            } 
+            else {
+                container.innerHTML = '<p>No more questions.</p>';
+                showMarkSheet();
+            }
+        }
+
+        // Call the function to generate HTML for the initial question
+        generateHTML();
+
+        // Function to move to the next question
+        function nextQuestion() {
+            var selectedOption = document.querySelector('input[name="question' + currentQuestionIndex + '"]:checked');
+            
+            // Check if an option is selected before moving to the next question
+            if (selectedOption) {
+                var userAnswer = selectedOption.value;
+                var correctAnswer = questionsData[currentQuestionIndex].Answer;
+
+                // Check if the user's answer is correct
+                if (userAnswer === correctAnswer) {
+                    correctCount++;
+                }
+
+                // Move to the next question
+                currentQuestionIndex++;
+
+                // Generate HTML for the next question
+                generateHTML();
+            } else {
+                alert('Please select an answer before moving to the next question.');
+            }
+        }
+
+        // Function to show the mark sheet
+        function showMarkSheet() {
+        //     var marksheet = document.getElementById('marksheet');
+        //     var percentage = (correctCount / totalQuestions) * 100;
+
+        //     marksheet.style.display = 'block';
+        //     marksheet.innerHTML = '<h2>Mark Sheet</h2>' +
+        //         '<p id="percentage">Percentage: ' + percentage.toFixed(2) + '%</p>' +
+        //         '<p id="correctAnswers">Correct Answers: ' + correctCount + '</p>' +
+        //         '<p id="incorrectAnswers">Incorrect Answers: ' + (totalQuestions - correctCount) + '</p>';
+        // }
+        var resultContainer = document.getElementById('resultContainer');
+            var percentage = (correctCount / totalQuestions) * 100;
+            var grade = '';
+        
+            if (percentage >= 50) {
+                grade = 'Pass';
+                resultContainer.innerHTML = '<p class="grade pass">Congratulations! You passed.</p>';
+            } else {
+                grade = 'Fail';
+                resultContainer.innerHTML = '<p class="grade fail">Sorry, you did not pass.</p>';
+            }
+        
+            resultContainer.innerHTML += '<p>Your Score: ' + correctCount + ' out of ' + totalQuestions + '</p>';
+            resultContainer.innerHTML += '<p>Percentage: ' + percentage.toFixed(2) + '%</p>';
+        }
+    </script> 
+    
+</body>
+</html>
