@@ -16,12 +16,7 @@
     <div id="quizContainer"></div>
     <button onclick="nextQuestion()">Next Question</button>
     <div id="resultContainer"></div>
-    <div id="marksheet" style="display: none;">
-        <h2>Mark Sheet</h2>
-        <p id="percentage"></p>
-        <p id="correctAnswers"></p>
-        <p id="incorrectAnswers"></p>
-    </div>
+    
     
     <script>
         var currentQuestionIndex = 0;
@@ -83,15 +78,7 @@
 
         // Function to show the mark sheet
         function showMarkSheet() {
-        //     var marksheet = document.getElementById('marksheet');
-        //     var percentage = (correctCount / totalQuestions) * 100;
-
-        //     marksheet.style.display = 'block';
-        //     marksheet.innerHTML = '<h2>Mark Sheet</h2>' +
-        //         '<p id="percentage">Percentage: ' + percentage.toFixed(2) + '%</p>' +
-        //         '<p id="correctAnswers">Correct Answers: ' + correctCount + '</p>' +
-        //         '<p id="incorrectAnswers">Incorrect Answers: ' + (totalQuestions - correctCount) + '</p>';
-        // }
+        
         var resultContainer = document.getElementById('resultContainer');
             var percentage = (correctCount / totalQuestions) * 100;
             var grade = '';
